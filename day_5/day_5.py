@@ -74,9 +74,40 @@ def exec_move(stacks, move):
   stacks[from_row] = stacks[from_row][nr:]
   for e in elems:
     stacks[to_row].insert(0, e)
+
+def exec_move2(stacks, move):
+  "Move Nr amount of elements from from_row to to_row"
+
+  nr       = move["move"]
+  from_row = move["from"]
+  to_row   = move["to"]
   
+  elems            = stacks[from_row][:nr]
+  stacks[from_row] = stacks[from_row][nr:]
+
+  elems.reverse()
+  for e in elems:
+    stacks[to_row].insert(0, e)
+    
+def run2(indata):
+  "Complete the first part and return the string formed on top of all stacks"
+  l1         = indata.split("\n\n")
+  stacks_raw = l1[0].split("\n")
+  moves      = l1[1].split("\n")
+  stacks     = gen_stacks(stacks_raw)
+
+  for move in parse_move(moves):
+    exec_move2(stacks, move)
+
+  res = ""
+  for t in stacks.keys():
+    res += stacks[t][0]
+
+  return res
+
 with open("5.txt") as f:
-  print(run(f.read()))
+  print(run2(f.read()))
 
   
+
 
