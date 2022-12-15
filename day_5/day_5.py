@@ -1,18 +1,8 @@
 from functools import reduce
 import functools as ft
 
-test = """    [D]    
-[N] [C]    
-[Z] [M] [P]
- 1   2   3 
-
-move 1 from 2 to 1
-move 3 from 1 to 3
-move 2 from 2 to 1
-move 1 from 1 to 2"""
-
-
 def get_row(l, n):
+  "Return all the elements in each stack as a list"
   if len(l[0]) >= (1 + (n - 1) * 4):
     l1 = list(map(lambda x: x[1 + (n - 1) * 4], l))
     l2 = list(filter(lambda x: x != " ", l1))
@@ -21,6 +11,7 @@ def get_row(l, n):
     return None
 
 def get_max_row(lines):
+  "Calculate how many stacks are used"
   for line in lines:
     if "[" in line:
       continue
@@ -30,6 +21,7 @@ def get_max_row(lines):
 
 
 def gen_stacks(stacks_raw):
+  "Construct the datastructure containing all the stacks"
   stack = {} 
 
   for row in range(1, get_max_row(stacks_raw) + 1):
@@ -38,6 +30,7 @@ def gen_stacks(stacks_raw):
   return stack
 
 def run(indata):
+  "Complete the first part and return the string formed on top of all stacks"
   l1         = indata.split("\n\n")
   stacks_raw = l1[0].split("\n")
   moves      = l1[1].split("\n")
@@ -54,6 +47,7 @@ def run(indata):
 
 
 def parse_move(lines):
+  "Create a data structure from the each line containing a move"
   parsed = []
   for line in lines:
     if line == "\n": break
@@ -81,10 +75,8 @@ def exec_move(stacks, move):
   for e in elems:
     stacks[to_row].insert(0, e)
   
-
-file_s = ""    
 with open("5.txt") as f:
-  file_s = f.read()
+  print(run(f.read()))
 
   
 
